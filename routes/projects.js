@@ -90,4 +90,19 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// Get single project by ID
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      .populate('jobId')
+      .populate('freelancerId', ['name', 'profileImage', 'trustScore', 'globalRating']);
+
+    if (!project) return res.status(404).json({ message: 'Project not found' });
+
+    res.json(project);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

@@ -29,6 +29,7 @@ const projectRoutes = require('./routes/projects');
 const bidRoutes = require('./routes/bids');
 const testRoutes = require('./routes/test');
 const notificationRoutes = require('./routes/notifications');
+const statsRoutes = require('./routes/stats');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
@@ -38,12 +39,18 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/bids', bidRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/stats', statsRoutes);
 
 app.get('/', (req, res) => {
   res.send('Nexurah API is running...');
 });
 
+// Export the app for Vercel
+module.exports = app;
+
 // Start Server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}

@@ -7,7 +7,7 @@ const jobSchema = new mongoose.Schema({
   budget: { type: Number, required: true },
   deadline: { type: Date, required: true },
   requiredSkills: [{ type: String }],
-  status: { type: String, enum: ['open', 'in-progress', 'completed'], default: 'open' },
+  status: { type: String, enum: ['open', 'in-progress', 'completed', 'closed', 'under-review'], default: 'open' },
   createdAt: { type: Date, default: Date.now }
 });
 

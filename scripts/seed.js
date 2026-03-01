@@ -1,109 +1,200 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
 const User = require('../models/User');
 const FreelancerProfile = require('../models/FreelancerProfile');
 const Job = require('../models/Job');
+const Bid = require('../models/Bid');
+const Project = require('../models/Project');
 const dotenv = require('dotenv');
 
 dotenv.config();
+
+const DATA_DIR = path.join(__dirname, '../Test');
+
+const parseCSV = (content) => {
+  if (!content) return [];
+  const lines = content.trim().split('\n');
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.trim());
+
+  return lines.slice(1).map(line => {
+    const values = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      if (char === '"') {
+        if (inQuotes && line[i + 1] === '"') {
+          current += '"';
+          i++;
+        } else {
+          inQuotes = !inQuotes;
+        }
+      } else if (char === ',' && !inQuotes) {
+        values.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    values.push(current.trim());
+
+    const obj = {};
+    headers.forEach((header, i) => {
+      obj[header] = values[i] ? values[i].replace(/^"|"$/g, '').trim() : '';
+    });
+    return obj;
+  });
+};
 
 const seedData = async () => {
   try {
     console.log('Connecting to:', process.env.MONGO_URI);
     await mongoose.connect(process.env.MONGO_URI);
-    console.log('Connected to MongoDB for seeding...');
+    console.log('Connected to MongoDB...');
 
     // Clear existing data
     console.log('Cleaning database...');
     await User.deleteMany({});
     await FreelancerProfile.deleteMany({});
     await Job.deleteMany({});
+    await Bid.deleteMany({});
+    await Project.deleteMany({});
     console.log('Database cleaned.');
 
-    // Create Company
-    console.log('Creating company user...');
-    const company = await User.create({
-      name: 'Nexurah Corp',
-      email: 'company@nexurah.com',
-      password: 'password123',
-      role: 'company'
-    });
-    console.log('Company created:', company._id);
+    const companyMapping = {}; // csv_id -> mongo_id
+    const freelancerMapping = {}; // csv_id -> mongo_id
+    const jobMapping = {}; // csv_id -> mongo_id
 
-    // Create Freelancers
-    console.log('Creating freelancers...');
-    const freelancers = [
-      { name: 'Alice Smith', email: 'alice@example.com', skills: ['React', 'Node.js', 'Tailwind CSS'], trustScore: 92, rating: 4.8 },
-      { name: 'Bob Johnson', email: 'bob@example.com', skills: ['React', 'TypeScript', 'MongoDB'], trustScore: 75, rating: 4.2 },
-      { name: 'Charlie Brown', email: 'charlie@example.com', skills: ['Node.js', 'Express', 'PostgreSQL'], trustScore: 60, rating: 3.5 },
-      { name: 'Diana Prince', email: 'diana@example.com', skills: ['React', 'Redux', 'Node.js', 'AWS'], trustScore: 88, rating: 4.9 }
-    ];
+    // 1. Seed Companies
+    console.log('Seeding Companies...');
+    const companiesData = parseCSV(fs.readFileSync(path.join(DATA_DIR, 'companies.csv'), 'utf8'));
+    for (const comp of companiesData) {
+      if (!comp.company_id) continue;
+      try {
+        const user = await User.create({
+          name: comp.company_name,
+          email: `contact@${comp.company_name.toLowerCase().replace(/[^a-z0-9]/g, '')}${Math.floor(Math.random() * 100)}.com`,
+          password: 'password123',
+          role: 'company'
+        });
+        companyMapping[comp.company_id] = user._id;
+      } catch (e) {
+        // console.error(`Error seeding company ${comp.company_name}:`, e.message);
+      }
+    }
+    console.log(`Seeded ${Object.keys(companyMapping).length} companies.`);
 
-    for (const f of freelancers) {
+    // 2. Seed Freelancers
+    console.log('Seeding Freelancers...');
+    const freelancersData = parseCSV(fs.readFileSync(path.join(DATA_DIR, 'freelancers.csv'), 'utf8'));
+    for (const f of freelancersData) {
+      if (!f.freelancer_id) continue;
       try {
         const user = await User.create({
           name: f.name,
-          email: f.email,
+          email: `${f.name.toLowerCase().replace(/[^a-z0-9]/g, '')}${Math.floor(Math.random() * 10000)}@example.com`,
           password: 'password123',
           role: 'freelancer',
-          trustScore: f.trustScore,
-          globalRating: f.rating
+          trustScore: parseFloat(f.safety_score) || 50,
+          globalRating: parseFloat(f.overall_rating) || 0
         });
+
+        const skills = f.skills ? f.skills.split(',').map(s => s.trim()) : [];
 
         await FreelancerProfile.create({
           userId: user._id,
-          skills: f.skills,
-          bio: `Experienced freelance developer specialized in ${f.skills.join(', ')}.`,
-          hourlyRate: 50 + Math.floor(Math.random() * 50),
-          country: ' United States',
-          verified: true
+          skills: skills,
+          bio: f.bio,
+          hourlyRate: parseFloat(f.hourly_rate) || 0,
+          country: f.location ? f.location.split(',').pop().trim() : 'India',
+          verified: f.verified_status === 'Verified',
+          testScore: parseFloat(f.verified_skill_score) || 0,
+          testTaken: !!f.verified_skill_score,
+          category: f.primary_role
         });
-        console.log(`Created freelancer: ${f.name}`);
+        freelancerMapping[f.freelancer_id] = user._id;
       } catch (err) {
-        console.error(`Failed to create freelancer ${f.name}:`, err.message);
+        // console.error(`Error seeding freelancer ${f.name}:`, err.message);
       }
     }
+    console.log(`Seeded ${Object.keys(freelancerMapping).length} freelancers.`);
 
-    // Create Sample Jobs
-    console.log('Creating jobs...');
-    const jobData = [
-      {
-        companyId: company._id,
-        title: 'Full Stack React Developer',
-        description: 'We need a developer to build a smart matching engine dashboard using React and Node.js. Must be proficient in Tailwind CSS and have experience with AI integrations.',
-        budget: 1500,
-        deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
-        requiredSkills: ['React', 'Node.js', 'Tailwind CSS']
-      },
-      {
-        companyId: company._id,
-        title: 'E-commerce Mobile App (React Native)',
-        description: 'Looking for an expert to develop a cross-platform mobile app for a luxury fashion brand. Features include payment gateway integration and AR product preview.',
-        budget: 4500,
-        deadline: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000),
-        requiredSkills: ['React Native', 'Firebase', 'Stripe']
-      },
-      {
-        companyId: company._id,
-        title: 'Python Data Scientist for AI NLP',
-        description: 'Help us build a sentiment analysis tool for customer feedback. You will work with large datasets and fine-tune LLM models.',
-        budget: 3200,
-        deadline: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
-        requiredSkills: ['Python', 'PyTorch', 'NLP']
-      },
-      {
-        companyId: company._id,
-        title: 'Logo & Brand Identity Design',
-        description: 'Startup looking for a creative designer to craft a modern logo and complete brand guidelines. Must have a strong portfolio.',
-        budget: 800,
-        deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-        requiredSkills: ['Graphic Design', 'Illustrator', 'Branding']
+    // 3. Seed Jobs
+    console.log('Seeding Jobs...');
+    const jobsData = parseCSV(fs.readFileSync(path.join(DATA_DIR, 'jobs.csv'), 'utf8'));
+    for (const j of jobsData) {
+      if (!j.job_id) continue;
+      const mongoCompanyId = companyMapping[j.company_id];
+      if (!mongoCompanyId) continue;
+
+      const skills = j.required_skills ? j.required_skills.split(',').map(s => s.trim()) : [];
+      const deadline = new Date();
+      deadline.setDate(deadline.getDate() + (parseInt(j.duration_days) || 30));
+
+      const job = await Job.create({
+        companyId: mongoCompanyId,
+        title: j.title,
+        description: j.description,
+        budget: parseFloat(j.budget) || 0,
+        deadline: deadline,
+        requiredSkills: skills,
+        status: j.status ? j.status.toLowerCase().replace(' ', '-') : 'open'
+      });
+      jobMapping[j.job_id] = job._id;
+    }
+    console.log(`Seeded ${Object.keys(jobMapping).length} jobs.`);
+
+    // 4. Seed Bids (from proposals.csv)
+    console.log('Seeding Bids...');
+    const proposalsFile = path.join(DATA_DIR, 'proposals.csv');
+    if (fs.existsSync(proposalsFile)) {
+      const proposalsData = parseCSV(fs.readFileSync(proposalsFile, 'utf8'));
+      let bidCount = 0;
+      for (const p of proposalsData) {
+        const mongoJobId = jobMapping[p.job_id];
+        const mongoFreelancerId = freelancerMapping[p.freelancer_id];
+        if (!mongoJobId || !mongoFreelancerId) continue;
+
+        await Bid.create({
+          jobId: mongoJobId,
+          freelancerId: mongoFreelancerId,
+          amount: parseFloat(p.bid_amount) || 0,
+          proposal: p.cover_letter || 'Interested in this job',
+          deliveryInDays: 7, // Default
+          status: (p.status || 'pending').toLowerCase()
+        });
+        bidCount++;
       }
-    ];
+      console.log(`Seeded ${bidCount} bids.`);
+    }
 
-    await Job.insertMany(jobData);
-    console.log('Sample jobs created.');
+    // 5. Seed Projects (from job_history.csv)
+    console.log('Seeding Projects...');
+    const historyFile = path.join(DATA_DIR, 'job_history.csv');
+    if (fs.existsSync(historyFile)) {
+      const historyData = parseCSV(fs.readFileSync(historyFile, 'utf8'));
+      let projectCount = 0;
+      for (const h of historyData) {
+        const mongoJobId = jobMapping[h.job_id];
+        const mongoFreelancerId = freelancerMapping[h.freelancer_id];
+        if (!mongoJobId || !mongoFreelancerId) continue;
 
-    console.log('Seed data created successfully!');
+        await Project.create({
+          jobId: mongoJobId,
+          freelancerId: mongoFreelancerId,
+          completionStatus: 'completed',
+          clientRating: parseFloat(h.rating) || 5,
+          deliveryTime: 'on-time'
+        });
+        projectCount++;
+      }
+      console.log(`Seeded ${projectCount} projects.`);
+    }
+
+    console.log('Seed data created successfully from Test directory!');
     process.exit(0);
   } catch (error) {
     console.error('Error seeding data:', error);
