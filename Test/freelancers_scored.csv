@@ -1,0 +1,101 @@
+freelancer_id,name,skills,verified_skill_score,hourly_rate,experience_years,total_projects_completed,average_response_time_hours,overall_rating,project_completion_rate,response_time_score,quality_score,rating,dynamic_score
+929ddb64-eac6-4fc0-8704-7104dd3b0dfc,Allison Hill,Python,47.1,135.44,2,5,17.0,2.14,1.0,0.385,2.2,2.3,57.32000000000001
+fad3b5f4-e538-40fd-8c00-1a8bbaf51803,Noah Rhodes,"Data Analysis, Python, DevOps, React, Graphic Design",81.4,44.76,5,37,7.6,4.14,1.0,0.55,6.7,3.7,78.43
+5f672113-1cc6-4fd9-a20c-db6ea7bc68c7,Angie Henderson,"Svelte, DevOps, Python",44.6,144.22,0,21,27.2,2.39,0.6666666666666666,0.32333333333333336,3.6,2.433333333333333,48.086666666666666
+c55ad4bd-f2c7-408e-846e-ead8dae0987c,Daniel Wagner,React,76.8,113.51,2,34,5.4,3.74,0.75,0.7375,8.1,3.9,76.46
+3cc6b79e-4f54-4226-909f-561394c74825,Cristian Santos,Cybersecurity,80.5,92.94,4,45,10.3,4.06,0.8,,7.0,0.0,60.6
+c61ff644-a2f1-4aef-8c42-e77daf9fe170,Connie Lawrence,Python,84.7,66.32,2,29,11.9,4.27,0.8,,7.0,0.0,61.44
+75fa80de-6748-4738-971b-89c0ccbe78aa,Abigail Shaffer,"Node.js, Copywriting, DevOps",75.1,87.11,3,15,11.4,4.08,1.0,0.71,7.140000000000001,4.0,81.92999999999999
+3c44f1f9-0e61-444a-82b5-66af78761cab,Gina Moore,"Machine Learning, Data Analysis",87.6,128.79,4,49,8.9,3.7,1.0,0.99,8.3,4.4,92.97
+a1832b64-3796-4a7b-b610-52b0debd02fe,Gabrielle Davis,Graphic Design,63.3,133.31,2,20,26.4,2.09,0.0,0.48,4.0,2.5,35.760000000000005
+5c4d485f-321d-47f9-96b0-2606c00906e7,Ryan Munoz,"Java, Machine Learning",87.4,115.57,3,34,6.6,3.74,1.0,0.73,7.15,4.199999999999999,85.405
+788f8e3a-b6de-4edc-9be4-2bb892f6d611,Monica Herrera,"C++, Video Editing, Data Analysis",51.6,81.62,2,48,19.9,3.4,1.0,0.36,3.4,3.0,61.62
+b444844c-c21e-40ae-9460-297911af6beb,Jamie Arnold,DevOps,96.3,66.94,6,38,1.7,4.71,1.0,0.8999999999999999,9.399999999999999,4.95,96.21
+e8e58940-ff65-45c2-83b7-4f1d69df9927,Lisa Hensley,"Digital Marketing, SEO, Cybersecurity, Python",72.2,30.06,4,27,10.8,4.18,1.0,0.94,9.8,4.1,90.24
+70643ebb-0797-4428-ae76-ea15fa2b6faf,Michele Williams,"Machine Learning, Python",65.4,83.54,0,6,21.5,2.7,1.0,0.48600000000000004,5.9,3.3200000000000003,71.61
+657893e0-2e36-49de-883d-a25208a7f599,Dylan Miller,"DevOps, Java, Digital Marketing",72.9,95.86,2,31,9.6,3.99,1.0,0.79,7.5,3.375,81.755
+d202d4ff-62da-4461-a3c3-aafa8770e177,Brian Ramirez,React,65.5,47.52,0,36,41.9,2.43,1.0,0.61,6.6,3.6,75.99999999999999
+368d1c17-82e1-4bd8-9c6c-4dff9f098ffe,Holly Wood,React,63.7,32.33,0,30,47.2,2.75,1.0,0.19,4.3,2.7,61.09
+0c54fff8-9f88-4381-8da6-3f55c22b979a,Derek Zuniga,"Node.js, SEO, Digital Marketing, Video Editing, Data Analysis",66.9,57.08,2,42,39.2,2.97,1.0,0.73,7.2,3.5,79.28
+2938ff17-ca4d-422b-aa90-5a7d8ca3c1b6,Lisa Jackson,"Machine Learning, Digital Marketing, Cybersecurity",92.2,94.44,8,0,1.0,4.79,1.0,0.895,8.600000000000001,4.95,94.09
+b78c968c-0781-4f67-acf2-a7130d44af74,Carla Gray,C++,74.3,84.41,2,17,11.1,4.27,1.0,0.616,6.62,3.44,77.43
+2b67e5a1-cdfa-4313-a570-1f834eebca68,Margaret Hawkins DDS,"Graphic Design, Digital Marketing, Node.js, C++",56.6,40.71,1,6,29.0,3.1,0.3333333333333333,0.46666666666666673,5.233333333333333,2.6333333333333333,46.403333333333336
+9c2e2cf4-e237-4e35-a7e3-05317379a772,Patty Perez,"Copywriting, Data Analysis, DevOps, Machine Learning",41.6,69.35,0,21,35.5,2.9,1.0,0.25,4.7,2.7,58.47
+3a2f574b-b688-43e5-86fb-a100616a733c,Ethan Adams,Graphic Design,95.4,48.72,12,4,0.7,4.59,1.0,0.97,9.1,4.4,95.33
+c6cfacb1-e652-4055-9c74-0daade76b083,Tommy Walter,"Svelte, DevOps, Digital Marketing, React",100.0,37.45,8,31,1.8,4.98,1.0,0.9099999999999999,8.399999999999999,4.9,95.49999999999999
+2dbb0dcb-8e0c-42c9-b8eb-6be9c08a56d2,Matthew Foster,"Graphic Design, DevOps, Data Analysis, Python",90.0,53.51,12,44,1.1,4.96,1.0,0.6,5.0,4.0,79.5
+e2262ed1-5aaf-4e5e-96b7-5bb64088d96f,Judy Baker,"Java, C++, Machine Learning, Node.js, Graphic Design",88.4,22.72,4,37,7.8,3.99,0.5,0.815,8.100000000000001,4.2,73.73
+c9f80022-df53-44a1-89c6-becbc535f042,Justin Baker,"Digital Marketing, DevOps, Cybersecurity, Node.js",95.1,106.15,6,15,1.8,4.53,1.0,0.9533333333333333,9.166666666666666,4.866666666666666,96.43666666666665
+3f5531ab-f57b-47cf-9b69-f2b83b7be6b5,Stephanie Ross,"React, Video Editing, Graphic Design, DevOps",81.8,141.19,4,13,6.2,4.03,1.0,0.74,7.5,4.0,84.40999999999998
+42db50f1-4bf2-487e-a2e3-6b6bd907e802,Zachary Hicks,"Graphic Design, SEO, Data Analysis",96.5,16.26,6,39,1.2,4.96,1.0,0.82,8.6,5.0,93.6
+92bae484-7e83-46a9-a13f-579ca028208c,Anthony Rodriguez,"React, Cybersecurity, Digital Marketing, Graphic Design, Svelte",87.7,53.47,4,28,10.8,4.29,1.0,0.935,9.2,4.5,93.54
+82004b31-46aa-4bf1-951a-802b3bfc9c5c,Rebecca Henderson,"C++, SEO, Video Editing, Java, Digital Marketing",98.2,50.7,7,6,0.9,4.83,1.0,0.882,9.28,4.92,95.96000000000001
+21ed633b-c10f-464d-921e-efe7d4bf98ec,James Ferrell,"Node.js, SEO, DevOps, Video Editing, Graphic Design",45.9,48.9,1,3,34.8,2.37,0.6,0.136,3.4200000000000004,2.1,41.33
+415d4ef7-0ab9-4c19-ae9e-8a3a39c73d2a,Tricia Valencia,Java,75.3,36.81,4,28,2.0,4.19,1.0,0.735,6.75,3.8,81.28499999999998
+19bf0978-4bd5-44c4-a618-ddc2d6f6da62,Nathan Maldonado,"C++, Data Analysis, Digital Marketing, Python, React",98.8,93.64,10,9,1.9,4.77,0.8,,7.0,0.0,64.25999999999999
+b2ff2d52-9ac4-4fb2-a44e-58a13b2e11d5,Debra Davidson,"Node.js, Python, SEO, Copywriting",63.1,107.08,0,42,43.0,3.26,1.0,0.495,4.1,3.15,68.12
+a4299deb-9e67-489f-93e5-e342d3d0c0d8,Jeffrey Chavez,Copywriting,65.6,139.98,0,15,26.6,2.87,0.0,0.79,6.1,3.5,48.57
+a854392f-f344-41a5-ba30-7e47928329e6,Sherri Baker,"Svelte, Cybersecurity",94.1,123.3,11,47,0.8,4.96,1.0,0.96,9.2,4.6,95.61999999999999
+fff2f935-9e68-457e-b679-ec795a7e18a2,Cassandra Gaines,"SEO, Node.js",43.1,41.94,0,29,43.4,3.2,0.5,0.16,2.85,2.5999999999999996,38.894999999999996
+41005b06-72d4-4773-af79-b12335ca8696,Elizabeth Fowler,"SEO, DevOps, Svelte",46.5,131.69,1,49,35.8,2.56,0.8,,7.0,0.0,53.800000000000004
+ea8e7b3e-bf0d-42c5-94d9-370c58096bbb,Brittany Farmer,"Copywriting, Java, Digital Marketing",88.6,133.4,2,16,7.4,4.35,1.0,0.6733333333333333,7.6000000000000005,4.0,84.58666666666666
+3f06ee33-c3de-4ea4-8649-f4128b329016,Paula Moreno,"Video Editing, SEO",96.0,96.84,11,32,1.0,4.89,1.0,0.83,9.0,4.1,91.6
+7ae5182e-ab26-443a-9264-82b6f9f40067,Fred Smith,Data Analysis,45.5,139.95,2,34,13.6,2.61,0.0,0.22499999999999998,3.8,2.4,26.5
+f2abdc8b-79e3-4d53-beee-e6c60a6580d4,Sherry Decker,"Copywriting, Data Analysis",96.6,112.17,6,19,1.0,4.66,1.0,0.87,9.5,4.866666666666666,95.57
+5ff48d35-1d7a-414a-bfca-eb396022f3a0,Anthony Humphrey,"SEO, Java, Data Analysis, Copywriting, Svelte",80.5,106.44,5,11,3.9,4.1,1.0,0.774,7.06,4.08,84.41000000000001
+9817ef46-92ee-4086-8cf2-51da4f4c6a52,Angelica Tucker,"Video Editing, SEO, Data Analysis, Digital Marketing, Python",74.0,77.77,4,28,9.9,4.05,1.0,0.755,7.5,3.75,82.39999999999999
+8f9a71a8-686f-481b-b864-c7f7ba09b13e,Philip Cannon,"Digital Marketing, Machine Learning",67.8,84.59,1,40,38.5,2.92,1.0,0.485,5.15,2.7,69.085
+91284c7f-dfb1-4e23-8a0b-3438bbb2378e,John Pierce,"Copywriting, React, Svelte, Graphic Design, Java",85.3,97.52,5,49,3.5,3.54,1.0,0.56,5.3,3.7,77.31
+5b0da80a-e6cc-4b94-8212-ffeb6d98ad49,Shane Henderson,Machine Learning,82.0,68.95,5,9,3.9,4.13,0.8,,7.0,0.0,60.9
+5d7507ee-2d21-42cc-a652-1b02d6d12966,Joshua Blair,Cybersecurity,62.3,123.55,0,44,15.8,2.6,1.0,0.23666666666666666,3.3000000000000003,2.6666666666666665,60.143333333333324
+a741d000-1e3b-4082-bb56-3f8a7e508b00,Eric Carney,"Machine Learning, Python, Digital Marketing, Graphic Design, React",85.2,143.26,4,28,8.7,4.39,1.0,0.9233333333333333,9.233333333333334,4.533333333333333,92.95666666666666
+6a416014-ddd0-42a3-bf72-526278838cb0,Jessica Holmes,"DevOps, C++, Digital Marketing, Data Analysis, Svelte",73.0,128.38,3,17,10.6,3.91,1.0,0.6285714285714287,6.071428571428571,3.4714285714285715,76.69285714285714
+e812a279-774b-4b89-b7e3-2e4473e95261,Danny Morgan,"Machine Learning, Java, Graphic Design, SEO, Cybersecurity",92.9,25.88,13,9,0.9,4.66,1.0,0.61,5.3,3.9,80.43
+26e39f93-ea14-4552-9cb4-4efb668e931e,Crystal Robinson,"Data Analysis, C++",92.1,71.13,12,13,1.1,4.67,0.8,,7.0,0.0,62.92
+a231f873-7450-4596-834b-79e03067af8c,Mark Perez,"Data Analysis, Svelte, Video Editing, C++",98.8,55.31,10,24,1.4,4.74,1.0,0.915,8.35,4.95,95.435
+868254af-3e88-4a1f-b5d0-38f09617a0dd,Shannon Jones,"Digital Marketing, C++, DevOps, Cybersecurity",66.0,18.92,1,21,29.6,2.38,1.0,0.77,6.4,3.1,77.50000000000001
+61fe71c7-8f07-4594-8151-a09bd1a4a592,Michael Lewis,"C++, Node.js, Machine Learning, DevOps",55.5,18.66,2,41,44.6,2.83,1.0,0.42,5.45,3.05,66.825
+8c5ef903-be67-4541-91fd-8ce43221bcd0,Timothy Duncan,"Node.js, DevOps, Machine Learning, Cybersecurity",93.8,52.56,11,26,0.8,4.66,1.0,0.88,9.0,5.0,94.85999999999999
+95a31a70-5190-47cd-82c6-9b0e1be1fb13,Richard Aguirre,"DevOps, React, Machine Learning",95.4,24.26,15,41,2.0,4.67,1.0,0.9450000000000001,8.9,4.55,94.98
+464a1500-eaf7-446f-b693-ef867ac9a660,Brent Jordan,Svelte,92.5,32.04,8,42,1.8,4.81,1.0,0.8600000000000001,8.350000000000001,4.65,92.17500000000001
+02ebb77e-b89b-4490-a29b-32efa132b854,John Daniel,Video Editing,53.5,96.98,2,47,21.2,2.52,1.0,0.83,9.1,4.3,83.85000000000001
+9c138655-98a4-4ea5-a871-ac120ab71af7,Victoria Garcia,Svelte,68.0,92.73,1,24,15.9,2.04,1.0,0.91,9.0,4.1,87.6
+fc04a48f-0524-4e0d-82db-5babcb0bc957,Gerald Hensley,"C++, Graphic Design, React, Video Editing",81.9,122.49,2,36,3.0,4.2,0.0,0.57,6.9,3.7,49.230000000000004
+10de70ee-8d4f-4b6b-849d-7d753a1ba78a,Connor West,Copywriting,82.6,129.69,2,31,2.7,4.08,1.0,0.88,8.8,4.7,91.42
+cd04ab1e-5c47-4627-9fef-ea7047b45575,Donald Wright,Data Analysis,58.4,38.78,1,33,41.8,2.99,0.0,0.23,4.3,3.0,31.730000000000004
+d0168774-5cd7-44ce-bf17-7b892e105415,Jessica Callahan,"Video Editing, Svelte, Digital Marketing",53.5,129.98,1,5,41.7,2.83,1.0,0.47,4.0,2.3,63.0
+67e95fe1-093e-48f9-bda8-864113677884,Amber Kidd,"Cybersecurity, Machine Learning, Graphic Design",56.5,129.88,1,11,36.1,2.47,0.8,,7.0,0.0,55.8
+814c5e2a-f5ca-4f86-8805-020ce011958a,Tracy House,"Graphic Design, Copywriting, Svelte, SEO",86.7,84.74,2,12,9.0,3.75,1.0,0.92,8.2,5.0,93.03999999999999
+695d40e9-0a9c-45bb-8c55-95794061dd1a,Carol Tucker,Graphic Design,54.2,111.1,2,28,39.3,2.97,1.0,0.30333333333333334,3.766666666666667,3.1,61.85666666666667
+2a58aeb3-0b2d-41b8-b835-a0778c95bdcb,James Brown,React,77.7,78.89,4,33,4.4,4.1,1.0,0.75,7.75,3.8,83.565
+125ed4c4-d43d-4cd6-9157-18807592cd44,William Baker,"Data Analysis, C++, Digital Marketing",83.4,112.37,2,20,4.7,3.73,0.8,,7.0,0.0,61.18
+2b5c3fe6-5b68-4a57-ab19-5a2d3040e771,Jordan Henderson,C++,84.5,52.33,5,37,3.9,3.69,1.0,0.858,8.24,4.18,88.96000000000001
+49f1c67f-63f7-4a99-9645-80b4ad7371c8,Whitney Peters,"Video Editing, SEO, React, Graphic Design, DevOps",73.4,21.14,4,3,2.1,3.98,1.0,0.6166666666666667,6.166666666666667,3.733333333333333,77.46333333333334
+0d155afa-c308-446a-8131-13bb61db5eed,Brittney Phillips,"SEO, C++, Node.js, Java, Machine Learning",90.1,39.89,10,3,0.9,4.74,1.0,0.9066666666666667,9.066666666666666,4.733333333333333,93.95333333333333
+e8e64b2c-022a-4eb8-8016-713dd9a41e00,Lauren Daniels,"DevOps, Machine Learning, React",51.6,35.48,0,36,14.7,2.88,1.0,0.12000000000000001,2.5,2.55,54.120000000000005
+15fb840b-8434-4389-b11f-8503a5b1292b,Amy Silva,"React, Graphic Design, Cybersecurity",77.9,75.82,5,28,8.0,4.06,1.0,0.79,7.55,3.75,83.955
+c613187b-4d9c-419b-a5fa-8e2f7033e74c,Sarah Moore,"DevOps, Video Editing, Data Analysis",81.8,99.44,3,16,8.1,4.17,1.0,0.8200000000000001,7.050000000000001,4.5,86.83500000000001
+67725a47-be0c-43fb-a5af-f97ca5cc1d16,Angela Lopez,Node.js,80.5,54.32,5,14,3.6,3.87,1.0,0.62,5.7,3.8,78.45
+f9911511-19b7-4eba-853d-b98a338cdcf6,Megan Young,"C++, SEO, Cybersecurity",42.1,94.62,2,12,20.4,2.37,1.0,0.47,2.4,1.8,56.82000000000001
+bc58b481-d349-4fae-9e84-dd46f928b244,Steve Sanchez,"React, Digital Marketing, Graphic Design, Java",92.7,95.33,9,36,0.7,4.53,1.0,0.97,8.7,4.9,95.69000000000001
+f234e1dd-ad28-492c-bb2b-7d872bba4a70,Lisa Barnes,"Machine Learning, React, Cybersecurity",83.3,74.1,5,38,11.4,3.95,1.0,0.89,9.166666666666666,4.6000000000000005,92.00999999999999
+9c1e3986-1057-4495-8f2c-8e92b99d1ad0,Kelly Donovan,Cybersecurity,76.1,149.94,2,43,4.5,3.58,1.0,0.61,5.0,3.9,76.62
+d6f6882b-31e6-4b24-9b68-4b0101fd2e18,Mike Allen,"Video Editing, Python, Svelte",53.6,149.59,0,27,35.5,3.28,0.6666666666666666,0.31,3.266666666666667,2.4333333333333336,49.120000000000005
+2faa99d6-1a77-4602-bf91-4e0d61a705f3,Michael Evans,"React, Machine Learning, Copywriting, Data Analysis",82.7,53.91,5,25,10.6,3.8,1.0,0.815,7.75,3.7,85.565
+a7e0f8dc-6829-436b-bcad-6d04195e4d7c,Paul Jones,"Python, Machine Learning, React, Copywriting, SEO",88.4,103.78,2,34,6.0,3.96,0.5,0.7250000000000001,7.25,4.25,70.805
+58a64493-1048-4bc2-b860-ec46ff192d70,Zachary Ferrell,"Data Analysis, Python, Graphic Design, Digital Marketing",84.4,51.05,3,8,8.3,4.18,1.0,0.975,9.15,4.199999999999999,92.705
+59c20792-0dd5-4667-a7fe-dd588f949bf6,Daniel Baker,"Machine Learning, C++, Cybersecurity",99.7,56.95,7,0,1.4,4.62,1.0,0.915,9.25,4.5,95.61500000000001
+59607935-124d-4319-bd75-d46faa4f5fc0,Shirley Suarez,"Data Analysis, React, Graphic Design, DevOps, Machine Learning",58.8,83.7,1,17,17.5,3.31,1.0,0.33499999999999996,4.425,2.95,63.947500000000005
+8fd51716-b924-485d-9dff-9caa3e45db31,Christopher Bass,"DevOps, Machine Learning, Cybersecurity, Graphic Design",72.7,131.64,3,17,3.9,4.04,1.0,0.63,6.2,3.4,76.64
+b8cd9f97-0aef-4a7a-9ce0-07544d676c3d,Lisa Archer,"Copywriting, Svelte, Digital Marketing, SEO",48.2,81.1,2,9,22.7,2.82,1.0,0.48,5.35,3.05,66.415
+fd69f275-62d6-494c-bf85-b8db54106bf4,Aimee Montoya,"Digital Marketing, Machine Learning, Copywriting, Svelte",80.3,147.4,3,15,6.6,3.79,0.5,0.645,5.85,3.8,64.13499999999999
+2d74ca3d-657b-49be-a288-e33539470cc9,Matthew Mcmillan,"Data Analysis, Graphic Design, Svelte, Cybersecurity, Python",79.0,81.87,3,2,11.1,3.84,1.0,0.54,5.6,3.9,76.7
+5c69382f-86d0-47d0-babd-73bba903fbd9,Brian Rodriguez,"Digital Marketing, Video Editing",71.9,17.07,5,9,10.5,3.59,1.0,0.54,7.0,3.4,75.88000000000001
+92086eb4-9a7d-48e3-b46d-712730f8fea9,Denise Jacobs,"DevOps, Java, Node.js, React",88.4,129.99,2,43,5.4,4.12,1.0,0.7133333333333334,8.166666666666666,4.1000000000000005,86.49666666666667
+4e56662e-da79-46fc-98a5-443a34957f09,Christina Walters,"Data Analysis, Copywriting, Java, C++, Machine Learning",41.0,149.65,1,47,14.5,2.88,0.6666666666666666,0.11666666666666665,2.6999999999999997,2.2333333333333334,41.28333333333333
+f34fd9de-7def-45f1-83fc-7581a0b0d7e9,John Whitehead,Data Analysis,62.1,108.69,0,1,37.3,2.14,0.6666666666666666,0.47000000000000003,5.733333333333333,3.4333333333333336,60.720000000000006
+ec8188bf-7f5c-43ea-b161-f50a92abcec1,Anna Henderson,Copywriting,48.5,70.63,2,43,25.5,2.2,0.8,,7.0,0.0,54.199999999999996
+07c671e4-a40a-403a-bc34-fd87eae4cc66,Aaron Wise,"Node.js, Cybersecurity",98.7,34.32,14,29,1.4,4.62,1.0,0.88,9.366666666666667,4.833333333333333,95.89
+12fb21ac-38a1-408e-b943-63221f0df014,Deborah Figueroa,"Machine Learning, SEO, Java",98.0,24.97,7,22,1.9,4.84,1.0,0.8966666666666666,9.166666666666666,4.933333333333334,96.08333333333333
+a2e1409f-e8f9-4933-8df9-859ae37bd31d,Jessica Smith,"SEO, Java, Data Analysis, C++, Cybersecurity",75.7,47.02,2,36,12.0,4.27,1.0,0.81,8.1,3.95,85.34
+df70f37a-925f-49b8-9e18-607ad5d57527,Stephen Mckee,"Video Editing, SEO, C++",88.6,137.93,2,47,8.6,3.75,1.0,0.7475,8.125,4.025,86.9325

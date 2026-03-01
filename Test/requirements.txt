@@ -1,0 +1,6 @@
+pandas
+faker
+requests
+beautifulsoup4
+flask
+pymongo
