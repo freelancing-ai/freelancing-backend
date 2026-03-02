@@ -1,0 +1,8 @@
+﻿[dotenv@17.3.1] injecting env (8) from .env -- tip: ≡ƒ¢í∩╕Å auth for agents: https://vestauth.com
+{
+  "error": {
+    "code": 403,
+    "message": "Your API key was reported as leaked. Please use another API key.",
+    "status": "PERMISSION_DENIED"
+  }
+}

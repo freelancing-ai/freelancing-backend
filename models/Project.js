@@ -8,7 +8,10 @@ const projectSchema = new mongoose.Schema({
   completionStatus: { type: String, enum: ['pending', 'in-progress', 'completed', 'cancelled'], default: 'pending' },
   clientRating: { type: Number, min: 1, max: 5 },
   deliveryTime: { type: String }, // e.g., "on-time", "delayed"
-  onTimeBonus: { type: Boolean, default: true }
+  onTimeBonus: { type: Boolean, default: true },
+  paymentStatus: { type: String, enum: ['unpaid', 'paid'], default: 'unpaid' },
+  razorpayOrderId: { type: String },
+  razorpayPaymentId: { type: String }
 });
 
 module.exports = mongoose.model('Project', projectSchema);

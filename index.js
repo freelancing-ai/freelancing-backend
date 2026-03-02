@@ -30,6 +30,7 @@ const bidRoutes = require('./routes/bids');
 const testRoutes = require('./routes/test');
 const notificationRoutes = require('./routes/notifications');
 const statsRoutes = require('./routes/stats');
+const paymentRoutes = require('./routes/payments');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
@@ -40,6 +41,7 @@ app.use('/api/bids', bidRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/payments', paymentRoutes);
 
 app.get('/', (req, res) => {
   res.send('Nexurah API is running...');
