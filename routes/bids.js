@@ -85,6 +85,36 @@ router.get('/my-applications', auth, async (req, res) => {
   }
 });
 
+// Get freelancer's own bids (Application Tracking)
+router.get('/my-bids', auth, async (req, res) => {
+  try {
+    if (req.user.role !== 'freelancer') {
+      return res.status(403).json({ message: 'Only freelancers can view their bids' });
+    }
+
+    const bids = await Bid.find({ freelancerId: req.user._id })
+      .populate({
+        path: 'jobId',
+        populate: { path: 'companyId', select: 'name' }
+      })
+      .sort({ createdAt: -1 });
+
+    // For accepted bids, fetch the associated Project ID
+    const bidsWithProject = await Promise.all(bids.map(async (bid) => {
+      const bidObj = bid.toObject();
+      if (bid.status === 'accepted') {
+        const project = await Project.findOne({ jobId: bid.jobId._id, freelancerId: req.user._id });
+        bidObj.projectId = project?._id;
+      }
+      return bidObj;
+    }));
+
+    res.json(bidsWithProject);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Accept a bid
 router.put('/:bidId/accept', auth, async (req, res) => {
   try {
@@ -102,10 +132,15 @@ router.put('/:bidId/accept', auth, async (req, res) => {
     await Job.findByIdAndUpdate(bid.jobId._id, { status: 'in-progress' });
 
     // Create a Project entry for tracking
-    await Project.create({
+    const newProject = await Project.create({
       jobId: bid.jobId._id,
       freelancerId: bid.freelancerId,
-      completionStatus: 'in-progress'
+      completionStatus: 'in-progress',
+      milestones: [
+        { title: 'Project Kickoff', description: 'Initial sync and environment setup', status: 'pending' },
+        { title: 'Core Implementation', description: 'Development of primary features', status: 'pending' },
+        { title: 'Final Delivery', description: 'Testing, refinement, and final hand-off', status: 'pending' }
+      ]
     });
 
     // Create notification for accepted freelancer
@@ -114,7 +149,7 @@ router.put('/:bidId/accept', auth, async (req, res) => {
       title: 'Bid Accepted!',
       message: `Your bid for "${bid.jobId.title}" has been accepted.`,
       type: 'bid_accepted',
-      link: `/project/${bid.jobId._id}`
+      link: `/project/${newProject._id}`
     });
 
     // Reject all other bids and notify them

@@ -25,7 +25,20 @@ router.get('/me', auth, async (req, res) => {
   try {
     const profile = await FreelancerProfile.findOne({ userId: req.user._id }).populate('userId', ['name', 'email', 'trustScore', 'globalRating']);
     if (!profile) return res.status(404).json({ message: 'Profile not found' });
-    res.json(profile);
+
+    // Fetch reviews from completed projects
+    const Project = require('../models/Project');
+    const reviews = await Project.find({
+      freelancerId: req.user._id,
+      completionStatus: 'completed'
+    })
+      .populate('jobId', 'title')
+      .select('clientRating clientReview endDate jobId');
+
+    const profileData = profile.toObject();
+    profileData.reviews = reviews;
+
+    res.json(profileData);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

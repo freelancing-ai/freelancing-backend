@@ -11,14 +11,17 @@ router.post('/', auth, async (req, res) => {
       return res.status(403).json({ message: 'Only companies can post jobs' });
     }
 
-    const { title, description, budget, deadline, requiredSkills } = req.body;
+    const { title, description, budget, deadline, requiredSkills, razorpay_payment_id, razorpay_order_id, paymentStatus } = req.body;
     const job = await Job.create({
       companyId: req.user._id,
       title,
       description,
       budget,
       deadline,
-      requiredSkills
+      requiredSkills,
+      razorpay_payment_id,
+      razorpay_order_id,
+      paymentStatus: paymentStatus || 'pending'
     });
 
     res.status(201).json(job);
