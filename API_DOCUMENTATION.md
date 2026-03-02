@@ -10,7 +10,7 @@ Welcome to the Nexurah API documentation. This document outlines the available e
 
 ### 1. Register User
 `POST /auth/register`
-Creates a new user account (Freelancer or Company).
+Creates a new user account (Freelancer or Company) and returns initial dashboard data for instant hydration.
 
 **Payload:**
 ```json
@@ -29,13 +29,22 @@ Creates a new user account (Freelancer or Company).
   "name": "John Doe",
   "email": "john@example.com",
   "role": "freelancer",
-  "token": "eyJhbGci..."
+  "trustScore": 50,
+  "globalRating": 0,
+  "profileImage": "",
+  "token": "eyJhbGci...",
+  "dashboardData": {
+    "profile": { ... },
+    "stats": { "earnings": 0, "completedCount": 0, "successRate": 100 },
+    "activeProjects": [],
+    "recommendedJobs": [ ... ]
+  }
 }
 ```
 
 ### 2. Login User
 `POST /auth/login`
-Authenticates a user and returns a JWT token.
+Authenticates a user and returns a JWT token along with comprehensive dashboard data.
 
 **Payload:**
 ```json
@@ -52,7 +61,49 @@ Authenticates a user and returns a JWT token.
   "name": "John Doe",
   "email": "john@example.com",
   "role": "freelancer",
-  "token": "eyJhbGci..."
+  "trustScore": 75,
+  "globalRating": 4.5,
+  "profileImage": "https://...",
+  "token": "eyJhbGci...",
+  "dashboardData": {
+    "//": "Structure varies based on user role. See Dashboard Data section for details."
+  }
+}
+```
+
+---
+
+## 📊 Dashboard Data Structure
+
+The `dashboardData` object is returned during authentication to allow the frontend to render the user's dashboard immediately without additional API calls.
+
+### Freelancer Role
+```json
+{
+  "profile": { /* FreelancerProfile object */ },
+  "stats": {
+    "earnings": 5400,
+    "completedCount": 12,
+    "successRate": 98
+  },
+  "activeProjects": [ /* List of Projects in-progress */ ],
+  "recommendedJobs": [ /* 6 Recommended Jobs matched for the user */ ]
+}
+```
+
+### Company Role
+```json
+{
+  "myJobs": [ /* List of Jobs posted by this company */ ],
+  "myApplications": [ /* Pending Bids for this company's jobs (populated) */ ],
+  "activeProjects": [ /* Ongoing Projects for this company's jobs */ ],
+  "platformStats": {
+    "totalFreelancers": 485,
+    "totalJobs": 124,
+    "totalProjects": 89,
+    "matchingAccuracy": 94.2,
+    "topSkills": [{ "name": "React", "count": 45 }, ...]
+  }
 }
 ```
 

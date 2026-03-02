@@ -27,10 +27,18 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// Get all open jobs
+// Get all open jobs (optionally matching skills)
 router.get('/', async (req, res) => {
   try {
-    const jobs = await Job.find({ status: 'open' }).populate('companyId', 'name');
+    const { matchSkills } = req.query;
+    let query = { status: 'open' };
+
+    if (matchSkills) {
+      const skillsArray = matchSkills.split(',');
+      query.requiredSkills = { $in: skillsArray };
+    }
+
+    const jobs = await Job.find(query).populate('companyId', 'name').sort({ createdAt: -1 });
 
     // Add bid count to each job
     const jobsWithBids = await Promise.all(jobs.map(async (job) => {

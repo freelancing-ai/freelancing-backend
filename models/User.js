@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, enum: ['freelancer', 'company'], required: true },
   profileImage: { type: String, default: '' },
+  bio: { type: String, default: '' },
+  country: { type: String, default: '' },
   trustScore: { type: Number, default: 50 }, // Starting trust score
   globalRating: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now }

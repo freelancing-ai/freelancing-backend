@@ -43,6 +43,11 @@ router.put('/me', auth, async (req, res) => {
 
     let profile = await FreelancerProfile.findOne({ userId: req.user._id });
     
+    // Update basic user info too so it shows in User documents
+    if (bio || country) {
+      await User.findByIdAndUpdate(req.user._id, { bio, country });
+    }
+
     if (profile) {
       profile.skills = skills || profile.skills;
       profile.bio = bio || profile.bio;
