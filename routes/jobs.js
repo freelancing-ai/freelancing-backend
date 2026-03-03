@@ -11,14 +11,15 @@ router.post('/', auth, async (req, res) => {
       return res.status(403).json({ message: 'Only companies can post jobs' });
     }
 
-    const { title, description, budget, deadline, requiredSkills } = req.body;
+    const { title, description, budget, deadline, requiredSkills, jobType } = req.body;
     const job = await Job.create({
       companyId: req.user._id,
       title,
       description,
       budget,
       deadline,
-      requiredSkills
+      requiredSkills,
+      jobType: jobType || 'quick_task'
     });
 
     res.status(201).json(job);
@@ -30,12 +31,15 @@ router.post('/', auth, async (req, res) => {
 // Get all open jobs (optionally matching skills)
 router.get('/', async (req, res) => {
   try {
-    const { matchSkills } = req.query;
+    const { matchSkills, jobType } = req.query;
     let query = { status: 'open' };
 
     if (matchSkills) {
       const skillsArray = matchSkills.split(',');
       query.requiredSkills = { $in: skillsArray };
+    }
+    if (jobType && ['quick_task', 'mid_level_task', 'advanced_task'].includes(jobType)) {
+      query.jobType = jobType;
     }
 
     const jobs = await Job.find(query).populate('companyId', 'name').sort({ createdAt: -1 });
