@@ -5,7 +5,7 @@ const FreelancerProfile = require('../models/FreelancerProfile');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ 
+const model = genAI.getGenerativeModel({
   model: "gemini-flash-latest"
 });
 
@@ -27,10 +27,10 @@ router.post('/generate', auth, async (req, res) => {
     const result = await model.generateContent(prompt);
     let content = result.response.text();
     console.log('Gemini Raw Response:', content);
-    
+
     // Clean up markdown if present
     content = content.replace(/```json/g, '').replace(/```/g, '').trim();
-    
+
     const data = JSON.parse(content);
     res.json(data.questions);
   } catch (error) {
@@ -42,17 +42,28 @@ router.post('/generate', auth, async (req, res) => {
 // Submit test result
 router.post('/submit', auth, async (req, res) => {
   const { score, category } = req.body;
-  
+
   try {
     const profile = await FreelancerProfile.findOneAndUpdate(
       { userId: req.user._id },
-      { 
-        testScore: score, 
+      {
+        testScore: score,
         testTaken: true,
         category: category
       },
       { new: true, upsert: true }
     );
+
+    // Seed globalRating from AI test score if the worker hasn't received any client rating yet.
+    // ratingCount = 0 means no prior client ratings → set testScore as the starting rating (count = 1).
+    // This ensures future client ratings average correctly with the AI score.
+    const User = require('../models/User');
+    const user = await User.findById(req.user._id);
+    if (user && user.ratingCount === 0) {
+      user.globalRating = parseFloat(score.toFixed(2));
+      user.ratingCount = 1; // count = 1 → "1 rating received (the AI test)"
+      await user.save();
+    }
 
     res.json({ message: 'Score saved successfully', profile });
   } catch (error) {

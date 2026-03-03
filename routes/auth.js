@@ -93,13 +93,13 @@ const getDashboardData = async (user) => {
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, role, bio, skills, hourlyRate, country } = req.body;
-    
+
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: 'User already exists' });
 
     // Create user with default scores and profile info
     const user = await User.create({ name, email, password, role, bio, country });
-    
+
     if (role === 'freelancer') {
       // Pre-create the profile with any data provided during registration
       await FreelancerProfile.create({
@@ -151,6 +151,26 @@ router.post('/login', async (req, res) => {
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
     }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get current user (refresh live data)
+router.get('/me', require('../middleware/auth'), async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      trustScore: user.trustScore,
+      globalRating: user.globalRating,
+      ratingCount: user.ratingCount,
+      profileImage: user.profileImage,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
