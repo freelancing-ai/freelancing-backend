@@ -12,9 +12,15 @@ router.get('/global-stats', async (req, res) => {
     const totalFreelancers = await User.countDocuments({ role: 'freelancer' });
     const totalJobs = await Job.countDocuments({});
     const totalProjects = await Project.countDocuments({ completionStatus: 'completed' });
-    
-    // Mocking accuracy for now based on logic, but could be calculated from ratings
-    const matchingAccuracy = 94.2; 
+
+    // Calculate real AI match accuracy from client ratings on completed projects
+    const ratedProjects = await Project.find({
+      completionStatus: 'completed',
+      clientRating: { $gt: 0 }
+    }, 'clientRating');
+    const matchingAccuracy = ratedProjects.length > 0
+      ? parseFloat(((ratedProjects.reduce((sum, p) => sum + p.clientRating, 0) / ratedProjects.length) * 10).toFixed(1))
+      : 0;
 
     // Aggregate top skills
     const profiles = await FreelancerProfile.find({}, 'skills');
@@ -44,29 +50,29 @@ router.get('/global-stats', async (req, res) => {
 
 // Get My Stats (For Freelancers)
 router.get('/my-stats', auth, async (req, res) => {
-    try {
-        if (req.user.role !== 'freelancer') {
-            return res.status(403).json({ message: 'Unauthorized' });
-        }
-
-        const projects = await Project.find({ freelancerId: req.user._id })
-            .populate('jobId', 'budget');
-
-        const completedProjects = projects.filter(p => p.completionStatus === 'completed');
-        const earnings = completedProjects.reduce((sum, p) => sum + (p.jobId?.budget || 0), 0);
-        
-        const successRate = projects.length > 0 
-            ? Math.round((completedProjects.length / projects.length) * 100) 
-            : 100;
-
-        res.json({
-            earnings,
-            completedCount: completedProjects.length,
-            successRate
-        });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  try {
+    if (req.user.role !== 'freelancer') {
+      return res.status(403).json({ message: 'Unauthorized' });
     }
+
+    const projects = await Project.find({ freelancerId: req.user._id })
+      .populate('jobId', 'budget');
+
+    const completedProjects = projects.filter(p => p.completionStatus === 'completed');
+    const earnings = completedProjects.reduce((sum, p) => sum + (p.jobId?.budget || 0), 0);
+
+    const successRate = projects.length > 0
+      ? Math.round((completedProjects.length / projects.length) * 100)
+      : 100;
+
+    res.json({
+      earnings,
+      completedCount: completedProjects.length,
+      successRate
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 module.exports = router;

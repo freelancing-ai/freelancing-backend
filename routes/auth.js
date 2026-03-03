@@ -176,4 +176,30 @@ router.get('/me', require('../middleware/auth'), async (req, res) => {
   }
 });
 
+// Search users by name (for New Message compose)
+router.get('/search-users', require('../middleware/auth'), async (req, res) => {
+  try {
+    const q = req.query.q?.trim();
+    if (!q) return res.json([]);
+    const users = await User.find({
+      _id: { $ne: req.user._id },
+      name: { $regex: q, $options: 'i' }
+    }).select('name profileImage role').limit(10);
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get any user's public info by ID (used for starting a new conversation)
+router.get('/user/:userId', require('../middleware/auth'), async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).select('name profileImage role');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
