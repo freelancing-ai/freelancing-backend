@@ -6,7 +6,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({
-  model: "gemini-flash-latest"
+  model: "gemini-2.5-flash"
 });
 
 // Generate 10 questions based on role
@@ -19,9 +19,10 @@ router.post('/generate', auth, async (req, res) => {
   const roleText = Array.isArray(roles) ? roles.join(' and ') : roles;
 
   try {
-    const prompt = `Generate 10 multiple choice questions for an assessment test for a freelancer specializing in ${roleText}. 
-    Each question should have 4 options and 1 correct answer (index 0-3).
-    Return only a JSON object matching this schema:
+    const prompt = `Generate exactly 10 multiple choice questions for an assessment test for a freelancer specializing strictly in ${roleText}. 
+    Do not include general freelancing questions. All questions MUST be highly specific to the technical and professional domain of ${roleText}.
+    Each question should have exactly 4 options and 1 correct answer (indicated by the 0-based index of the option, from 0 to 3).
+    Return ONLY a raw JSON object and nothing else. Do not use markdown blocks like \`\`\`json. The JSON object must strictly match this schema:
     { "questions": [{ "question": "string", "options": ["string", "string", "string", "string"], "correctAnswer": number }] }`;
 
     const result = await model.generateContent(prompt);
@@ -31,7 +32,23 @@ router.post('/generate', auth, async (req, res) => {
     // Clean up markdown if present
     content = content.replace(/```json/g, '').replace(/```/g, '').trim();
 
-    const data = JSON.parse(content);
+    let data;
+    try {
+      data = JSON.parse(content);
+    } catch (parseError) {
+      // Fallback: try to extract the JSON object using regex if there's extra text
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        data = JSON.parse(jsonMatch[0]);
+      } else {
+        throw new Error("Could not parse JSON from AI response.");
+      }
+    }
+
+    if (!data || !data.questions) {
+      throw new Error("Invalid response format from AI.");
+    }
+
     res.json(data.questions);
   } catch (error) {
     console.error('Error generating questions:', error);
