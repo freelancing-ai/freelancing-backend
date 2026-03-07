@@ -7,24 +7,28 @@ const projectSchema = new mongoose.Schema({
   endDate: { type: Date },
   completionStatus: { type: String, enum: ['pending', 'in-progress', 'completed', 'cancelled'], default: 'pending' },
   progressPercentage: { type: Number, default: 0 },
+  clientRating: { type: Number, min: 1, max: 10 },
+  clientReview: { type: String },
+  deliveryTime: { type: String }, // e.g., "on-time", "delayed"
+  onTimeBonus: { type: Boolean, default: true },
+  razorpayOrderId: { type: String },
+  razorpayPaymentId: { type: String },
+  milestonePayments: {
+    kickoff: { paid: { type: Boolean, default: false }, amount: Number, orderId: String, paymentId: String },
+    core: { paid: { type: Boolean, default: false }, amount: Number, orderId: String, paymentId: String },
+    final: { paid: { type: Boolean, default: false }, amount: Number, orderId: String, paymentId: String }
+  },
   milestones: [{
     title: { type: String, required: true },
     description: String,
-    status: { type: String, enum: ['pending', 'submitted', 'approved'], default: 'pending' },
+    status: { type: String, enum: ['pending', 'submitted', 'approved', 'rejected'], default: 'pending' },
     createdAt: { type: Date, default: Date.now },
     submittedAt: Date,
     approvedAt: Date,
     submissionNote: String,
     submissionLink: String,
     feedback: String
-  }],
-  clientRating: { type: Number, min: 1, max: 10 },
-  clientReview: { type: String },
-  deliveryTime: { type: String }, // e.g., "on-time", "delayed"
-  onTimeBonus: { type: Boolean, default: true },
-  paymentStatus: { type: String, enum: ['unpaid', 'paid'], default: 'unpaid' },
-  razorpayOrderId: { type: String },
-  razorpayPaymentId: { type: String }
+  }]
 });
 
 module.exports = mongoose.model('Project', projectSchema);

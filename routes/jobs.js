@@ -11,7 +11,7 @@ router.post('/', auth, async (req, res) => {
       return res.status(403).json({ message: 'Only companies can post jobs' });
     }
 
-    const { title, description, budget, deadline, requiredSkills, razorpay_payment_id, razorpay_order_id, paymentStatus } = req.body;
+    const { title, description, budget, deadline, requiredSkills, jobType, razorpay_payment_id, razorpay_order_id, paymentStatus } = req.body;
     const job = await Job.create({
       companyId: req.user._id,
       title,
@@ -19,6 +19,7 @@ router.post('/', auth, async (req, res) => {
       budget,
       deadline,
       requiredSkills,
+      jobType: jobType || 'quick_task',
       razorpay_payment_id,
       razorpay_order_id,
       paymentStatus: paymentStatus || 'pending'
@@ -33,12 +34,15 @@ router.post('/', auth, async (req, res) => {
 // Get all open jobs (optionally matching skills)
 router.get('/', async (req, res) => {
   try {
-    const { matchSkills } = req.query;
+    const { matchSkills, jobType } = req.query;
     let query = { status: 'open' };
 
     if (matchSkills) {
       const skillsArray = matchSkills.split(',');
       query.requiredSkills = { $in: skillsArray };
+    }
+    if (jobType && ['quick_task', 'mid_level_task', 'advanced_task'].includes(jobType)) {
+      query.jobType = jobType;
     }
 
     const jobs = await Job.find(query).populate('companyId', 'name').sort({ createdAt: -1 });

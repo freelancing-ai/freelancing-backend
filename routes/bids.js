@@ -14,7 +14,7 @@ router.post('/', auth, async (req, res) => {
     }
 
     const { jobId, amount, proposal, deliveryInDays } = req.body;
-    
+
     // Check if job exists and is open
     const job = await Job.findById(jobId);
     if (!job || job.status !== 'open') {
@@ -35,6 +35,15 @@ router.post('/', auth, async (req, res) => {
       deliveryInDays
     });
 
+    // Notify the company
+    await Notification.create({
+      userId: job.companyId,
+      title: 'New Bid Received',
+      message: `A new bid of ${amount} has been placed on your job "${job.title}".`,
+      type: 'system',
+      link: `/dashboard#applications`
+    });
+
     res.status(201).json(bid);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -46,7 +55,7 @@ router.get('/job/:jobId', auth, async (req, res) => {
   try {
     const job = await Job.findById(req.params.jobId);
     if (!job) return res.status(404).json({ message: 'Job not found' });
-    
+
     // Only the job creator can see all bids
     if (job.companyId.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Unauthorized' });
@@ -132,16 +141,20 @@ router.put('/:bidId/accept', auth, async (req, res) => {
     await Job.findByIdAndUpdate(bid.jobId._id, { status: 'in-progress' });
 
     // Create a Project entry for tracking
-    const newProject = await Project.create({
+    const project = await Project.create({
       jobId: bid.jobId._id,
       freelancerId: bid.freelancerId,
       completionStatus: 'in-progress',
       milestones: [
-        { title: 'Project Kickoff', description: 'Initial sync and environment setup', status: 'pending' },
+        { title: 'Project Initialization', description: 'Setup environment and initial architecture', status: 'pending' },
         { title: 'Core Implementation', description: 'Development of primary features', status: 'pending' },
         { title: 'Final Delivery', description: 'Testing, refinement, and final hand-off', status: 'pending' }
-      ]
+      ],
+      progressPercentage: 0
     });
+
+    bid.projectId = project._id;
+    await bid.save();
 
     // Create notification for accepted freelancer
     await Notification.create({
@@ -149,12 +162,12 @@ router.put('/:bidId/accept', auth, async (req, res) => {
       title: 'Bid Accepted!',
       message: `Your bid for "${bid.jobId.title}" has been accepted.`,
       type: 'bid_accepted',
-      link: `/project/${newProject._id}`
+      link: `/project/${project._id}`
     });
 
     // Reject all other bids and notify them
     const otherBids = await Bid.find({ jobId: bid.jobId._id, _id: { $ne: bid._id } });
-    
+
     for (const otherBid of otherBids) {
       otherBid.status = 'rejected';
       await otherBid.save();
@@ -199,5 +212,7 @@ router.put('/:bidId/reject', auth, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
 
 module.exports = router;

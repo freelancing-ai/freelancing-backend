@@ -33,7 +33,7 @@ router.post('/create-order', auth, async (req, res) => {
 // Verify payment
 router.post('/verify-payment', auth, async (req, res) => {
     try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, projectId } = req.body;
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, projectId, milestoneKey } = req.body;
 
         const sign = razorpay_order_id + "|" + razorpay_payment_id;
         const expectedSign = crypto
@@ -43,15 +43,21 @@ router.post('/verify-payment', auth, async (req, res) => {
 
         if (razorpay_signature === expectedSign) {
             // Payment verified
-            if (projectId) {
-                const project = await Project.findById(projectId).populate('jobId');
+            if (projectId && milestoneKey) {
+                const project = await Project.findById(projectId);
                 if (project) {
-                    project.paymentStatus = 'paid';
-                    project.completionStatus = 'completed';
-                    await project.save();
+                    if (!project.milestonePayments) project.milestonePayments = {};
+                    if (!project.milestonePayments[milestoneKey]) project.milestonePayments[milestoneKey] = {};
 
-                    // Update job status if not already
-                    await Job.findByIdAndUpdate(project.jobId._id, { status: 'completed' });
+                    project.milestonePayments[milestoneKey].paid = true;
+                    project.milestonePayments[milestoneKey].orderId = razorpay_order_id;
+                    project.milestonePayments[milestoneKey].paymentId = razorpay_payment_id;
+
+                    // NOTE: Do NOT auto-complete the project here.
+                    // The company must explicitly submit the final review via /projects/:id/complete
+                    // which is where completionStatus gets set to 'completed'.
+
+                    await project.save();
                 }
             }
             return res.status(200).json({ message: "Payment verified successfully" });
