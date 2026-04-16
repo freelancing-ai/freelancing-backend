@@ -22,7 +22,14 @@ const freelancerProfileSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
   testScore: { type: Number, default: 0 },
   testTaken: { type: Boolean, default: false },
-  category: { type: String }
+   category: { type: String },
+   experienceLevel: { type: String, enum: ['Junior', 'Intermediate', 'Expert'], default: 'Intermediate' },
+   yearsOfExperience: { type: Number },
+   languages: [{ type: String }],
+   githubLink: { type: String },
+   linkedinLink: { type: String },
+   availability: { type: String, enum: ['Full-time', 'Part-time', 'Freelance'], default: 'Freelance' },
+   topEducation: { type: String }
 });
 
 module.exports = mongoose.model('FreelancerProfile', freelancerProfileSchema);

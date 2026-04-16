@@ -86,7 +86,11 @@ router.get('/:userId', async (req, res) => {
 // Update profile
 router.put('/me', auth, async (req, res) => {
   try {
-    const { skills, bio, hourlyRate, country, region, education, experience, category } = req.body;
+    const { 
+      skills, bio, hourlyRate, country, region, education, experience, category,
+      experienceLevel, yearsOfExperience, languages, githubLink, linkedinLink, availability,
+      profileImage, topEducation
+    } = req.body;
 
     // Simple Fraud Check (as per user request)
     let fraudScore = 0;
@@ -96,8 +100,8 @@ router.put('/me', auth, async (req, res) => {
     let profile = await FreelancerProfile.findOne({ userId: req.user._id });
 
     // Update basic user info too so it shows in User documents
-    if (bio || country) {
-      await User.findByIdAndUpdate(req.user._id, { bio, country });
+    if (bio || country || profileImage) {
+      await User.findByIdAndUpdate(req.user._id, { bio, country, profileImage });
     }
 
     if (profile) {
@@ -109,6 +113,13 @@ router.put('/me', auth, async (req, res) => {
       profile.education = education || profile.education;
       profile.experience = experience || profile.experience;
       profile.category = category || profile.category;
+      profile.experienceLevel = experienceLevel || profile.experienceLevel;
+      profile.yearsOfExperience = yearsOfExperience || profile.yearsOfExperience;
+      profile.languages = languages ? (typeof languages === 'string' ? languages.split(',').map(l => l.trim()) : languages) : profile.languages;
+      profile.githubLink = githubLink || profile.githubLink;
+      profile.linkedinLink = linkedinLink || profile.linkedinLink;
+      profile.availability = availability || profile.availability;
+      profile.topEducation = topEducation || profile.topEducation;
       profile.fraudScore = fraudScore;
       await profile.save();
       return res.json(profile);
@@ -124,6 +135,13 @@ router.put('/me', auth, async (req, res) => {
       education,
       experience,
       category,
+      experienceLevel,
+      yearsOfExperience,
+      languages: languages ? (typeof languages === 'string' ? languages.split(',').map(l => l.trim()) : languages) : [],
+      githubLink,
+      linkedinLink,
+      availability,
+      topEducation,
       fraudScore
     });
 

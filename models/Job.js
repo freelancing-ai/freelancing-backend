@@ -7,9 +7,10 @@ const jobSchema = new mongoose.Schema({
   budget: { type: Number, required: true },
   deadline: { type: Date, required: true },
   requiredSkills: [{ type: String }],
-  jobType: { type: String, enum: ['quick_task', 'mid_level_task', 'advanced_task'], default: 'quick_task' },
+  jobType: { type: String, enum: ['quick_task', 'mid_level_task', 'advanced_task', 'Others'], default: 'quick_task' },
+  category: { type: String, default: 'General' },
   status: { type: String, enum: ['open', 'in-progress', 'completed', 'closed', 'under-review'], default: 'open' },
-  paymentStatus: { type: String, enum: ['pending', 'paid'], default: 'pending' },
+  paymentStatus: { type: String, enum: ['unpaid', 'pending', 'paid'], default: 'pending' },
   razorpay_payment_id: { type: String },
   razorpay_order_id: { type: String },
   createdAt: { type: Date, default: Date.now }
